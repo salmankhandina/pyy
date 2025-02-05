@@ -1,9 +1,44 @@
-name : pyhton
-on :
-   push:
-   branch: [main]
-job:
- 
- build:
-  
-run on: ubantu
+name: Run Python Calculator
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run-calculator:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Create calculator script
+        run: |
+          echo "first = input('Enter first number: ')" > calculator.py
+          echo "operator = input('Choose operation (+, -, *, /): ')" >> calculator.py
+          echo "second = input('Enter second number: ')" >> calculator.py
+          echo "first = int(first)" >> calculator.py
+          echo "second = int(second)" >> calculator.py
+          echo "if operator == '+':" >> calculator.py
+          echo "    print(first + second)" >> calculator.py
+          echo "elif operator == '-':" >> calculator.py
+          echo "    print(first - second)" >> calculator.py
+          echo "elif operator == '*':" >> calculator.py
+          echo "    print(first * second)" >> calculator.py
+          echo "elif operator == '/':" >> calculator.py
+          echo "    print(first / second)" >> calculator.py
+          echo "else:" >> calculator.py
+          echo "    print('Invalid operator')" >> calculator.py
+      
+      - name: Run calculator script
+        run: python calculator.py
