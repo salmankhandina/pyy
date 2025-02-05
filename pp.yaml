@@ -1,0 +1,9 @@
+name : pyhton
+on :
+   push:
+   branch: [main]
+job:
+ 
+ build:
+  
+run on: ubantu
